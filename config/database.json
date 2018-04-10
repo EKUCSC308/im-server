@@ -1,0 +1,11 @@
+{
+  "development": {
+    "use_env_variable": "CSC308_DB_HOST"
+  },
+  "test": {
+    "use_env_variable": "CSC308_DB_HOST"
+  },
+  "production": {
+    "use_env_variable": "CSC308_DB_HOST"
+  }
+}
