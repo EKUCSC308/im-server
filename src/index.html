@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="/scripts/socket.io-client/dist/socket.io.js"></script>
+    </head>
+    <body>
+        <div id="form">
+            <input type="text" id="message" />
+            <input type="submit" id="submit" />
+        </div>
+        <div id="response"></div>
+        <script type="text/javascript">
+            var messageInput = document.getElementById('message')
+            var formSubmit = document.getElementById('submit')
+            var responseContainer = document.getElementById('response')
+
+            formSubmit.addEventListener('click', function () {
+                var event = {
+                  scope: "message",
+                  data: {
+                    type: "text",
+                    content: messageInput.value
+                  }
+                }
+
+                appendMessage("you", event)
+                socket.emit('event', event)
+            })
+
+            function appendMessage (whoFrom, event) {
+              var entry = document.createElement('p')
+              entry.innerHTML = "<b>" + whoFrom + "</b>: " + event.data.content
+              responseContainer.appendChild(entry)
+            }
+
+            var socket = io();
+            socket.on('event', function (event) {
+                appendMessage("them", event)
+            })
+        </script>
+    </body>
+</html>
