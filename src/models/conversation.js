@@ -1,4 +1,4 @@
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   var conversation = sequelize.define('conversation', {
     token: DataTypes.STRING
   }, {})

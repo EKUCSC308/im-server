@@ -2,6 +2,7 @@
 <html>
     <head>
         <script src="/scripts/socket.io-client/dist/socket.io.js"></script>
+        <script src="/scripts/axios/dist/axios.js"></script>
     </head>
     <body>
         <div id="form">
@@ -13,30 +14,44 @@
             var messageInput = document.getElementById('message')
             var formSubmit = document.getElementById('submit')
             var responseContainer = document.getElementById('response')
+            var conversationToken = null
+            var socket = null
+            var deviceToken = '2rj1r23gjk378afb9r2hk41oupvsr'
+
+            axios.post('/create-conversation').then((res) => {
+                console.log('RESPONSE FOUND:', res.data)
+                conversationToken = res.data.token
+
+                socket = connectToConversation()
+            })
+
+            function connectToConversation () {
+              var socket = io()
+              socket.on('event', function (event) {
+                appendMessage("them", event)
+              })
+
+              return socket
+            }
+
 
             formSubmit.addEventListener('click', function () {
-                var event = {
-                  scope: "message",
-                  data: {
-                    type: "text",
-                    content: messageInput.value
-                  }
-                }
+              var event = {
+                type: "text",
+                content: messageInput.value,
+                device_token: deviceToken,
+                conversation_token: conversationToken
+              }
 
-                appendMessage("you", event)
-                socket.emit('event', event)
+              appendMessage("you", event)
+              socket.emit('event', event)
             })
 
             function appendMessage (whoFrom, event) {
               var entry = document.createElement('p')
-              entry.innerHTML = "<b>" + whoFrom + "</b>: " + event.data.content
+              entry.innerHTML = "<b>" + whoFrom + "</b>: " + event.content
               responseContainer.appendChild(entry)
             }
-
-            var socket = io();
-            socket.on('event', function (event) {
-                appendMessage("them", event)
-            })
         </script>
     </body>
 </html>

@@ -14,6 +14,9 @@ module.exports = {
       type: {
         type: Sequelize.STRING
       },
+      conversation_token: {
+        type: Sequelize.STRING
+      },
       device_token: {
         type: Sequelize.STRING
       },
