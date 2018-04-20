@@ -113,7 +113,7 @@ When the user logs out of the app, the JWT should be removed from the app's sess
 ## Errors
 Successful HTTP requests usually return a `200` status code. Unsuccessful requests return a non-`200` status code, indicating an error has occurred. 
 
-### 403 Forbidden status code
+#### 403 Forbidden status code
 The API will return a `403` status code if a request is sent without a valid authorization header. The only exception to this rule is the `/auth/login` endpoint, since you it creates the authorization token in the first place.
 
 #### 400 Bad Request status code
