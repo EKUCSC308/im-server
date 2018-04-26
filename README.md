@@ -2,6 +2,18 @@
 
 ## Endpoints
 
+All requests should be sent to..
+
+```
+http://192.241.175.100:3002
+```
+
+For example:
+
+```
+http://192.241.175.100:3002/auth/login
+```
+
 ### Register user account
 
 ```
