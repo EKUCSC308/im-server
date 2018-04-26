@@ -1,6 +1,57 @@
 # Instant Messaging Server
 
 ## Endpoints
+An `endpoint` is a URL that executes a specific operation within an app. For example, the `{url}/auth/login` endpoint will allow users to sign in to the app. All of the necessary endpoints required by the client (iPhone app), are listed below. Each endpoint includes a request type (i.e `GET` or `POST`), URL, and the information that must be sent to the endpoint.
+
+In the iPhone app, create a couple classes that contain functions which send requests to the API. The structure should look like this:
+
+```
+/net    <-- create a directory called "net" inside the project. This will contain your classes.
+|---- Auth.swift
+|---- Conversations.swift
+```
+
+```swift
+// inside "Auth.swift"
+struct LoginResponse {
+    var jwt: string
+}
+
+class Auth {
+    func login(username: string, password:string) -> LoginResponse {
+        // Create the HTTP request
+        var request = URLRequest(url: "http://192.241.175.100:3002/auth/login")
+        
+        // Set request type to "POST" (default is "GET")
+        request.httpMethod = "POST"
+        
+        // Tell the server you are sending JSON
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        // Send username and password with request
+        request.httpBody = JSONEncoder().encode([
+            "username": username,
+            "password": password
+        ])
+
+        // Add the "authorization" header to the request.
+        // Replace <jwt> with the JWT from the app's session storage
+        request.setValue("Bearer <jwt>", forHTTPHeaderField: "Authorization")
+        
+        // Execute the request
+        let task = URLSession.shared.dataTask(with: request, completionHandler: { (responseData: Data?, response: URLResponse?, error: Error?) in
+            
+            return LoginResponse (
+                jwt: responseData
+            )
+            
+        })
+        task.resume()
+    }
+}
+```
+
+### Base URL
 
 All requests should be sent to...
 
