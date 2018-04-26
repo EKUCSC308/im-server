@@ -2,7 +2,7 @@
 
 ## Endpoints
 
-All requests should be sent to..
+All requests should be sent to...
 
 ```
 http://192.241.175.100:3002
@@ -119,8 +119,11 @@ var request = URLRequest(url: "http://domain.com/conversations")
 request.setValue("Bearer <jwt>", forHTTPHeaderField: "Authorization")
 ```
 
-#### Logging out
-When the user logs out of the app, the JWT should be removed from the app's session storage.
+#### Checking if a user is signed in to the app
+When the app boots, it should check its session storage for a `jwt`. Remember, an authentication token is required to be sent with each request to the API, so if a `jwt` doesn't exist in session storage, we should assume the user is logged out and show the login/register view.
+
+#### Signing out of the app
+Simply delete the `jwt` from session storage. The user will have to login again to get a new token.
 
 ## Errors
 Successful HTTP requests usually return a `200` status code. Unsuccessful requests return a non-`200` status code, indicating an error has occurred. 
