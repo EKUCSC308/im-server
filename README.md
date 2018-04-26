@@ -18,6 +18,12 @@ struct LoginResponse {
 }
 
 class Auth {
+    let jwt: string = ""
+    
+    init (jwt: string) {
+        this.jwt = jwt
+    }
+
     func login(username: string, password:string) -> LoginResponse {
         // Create the HTTP request
         var request = URLRequest(url: "http://192.241.175.100:3002/auth/login")
@@ -36,7 +42,7 @@ class Auth {
 
         // Add the "authorization" header to the request.
         // Replace <jwt> with the JWT from the app's session storage
-        request.setValue("Bearer <jwt>", forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer \(jwt)", forHTTPHeaderField: "Authorization")
         
         // Execute the request
         let task = URLSession.shared.dataTask(with: request, completionHandler: { (responseData: Data?, response: URLResponse?, error: Error?) in
