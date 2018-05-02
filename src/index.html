@@ -18,7 +18,7 @@
             var socket = null
             var deviceToken = '2rj1r23gjk378afb9r2hk41oupvsr'
 
-            axios.post('/create-conversation').then((res) => {
+            axios.post('/conversations/create').then((res) => {
                 console.log('RESPONSE FOUND:', res.data)
                 conversationToken = res.data.token
 
