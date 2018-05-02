@@ -119,6 +119,30 @@ app.post('/conversations/create', (req, res) => {
 wsServer.on('connection', (socket) => {
   console.log('connected')
 
+  socket.broadcast.emit('event', {
+    scope: EVENT_SCOPE_MESSAGE,
+    type: 'joined',
+    content: 'User joined conversation',
+    device_token: Math.random(),
+    conversation_token: Math.random()
+  })
+
+  models.conversation_event.findAll({ limit: 50 })
+    .then((events) => {
+      for (let x = 0; x < events.length; x++) {
+        socket.broadcast.emit('event', {
+          scope: EVENT_SCOPE_SESSION,
+          type: event.type,
+          content: event.content,
+          device_token: event.device_token,
+          conversation_token: event.conversation_token
+        })
+      }
+    })
+    .catch(() => {
+      // do nothing
+    })
+
   socket.on('event', (event) => {
     const message = {
       scope: EVENT_SCOPE_MESSAGE,
@@ -128,13 +152,25 @@ wsServer.on('connection', (socket) => {
       conversation_token: event.conversation_token
     }
 
-    models.conversation_event.create(message).then(() => {
-      socket.broadcast.emit('event', message)
-    })
+    models.conversation_event.create(message)
+      .catch(() => {
+        // do nothing
+      })
+
+    // Don't wait for message to be persisted. Send
+    // it to all other participants.
+    socket.broadcast.emit('event', message)
   })
 
   socket.on('disconnect', () => {
     console.log('disconnected')
+    socket.broadcast.emit('event', {
+      scope: EVENT_SCOPE_SESSION,
+      type: 'left',
+      content: 'User left conversation',
+      device_token: Math.random(),
+      conversation_token: Math.random()
+    })
   })
 })
 
