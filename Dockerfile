@@ -9,5 +9,5 @@ RUN yarn install
 
 COPY . /home/app
 
-EXPOSE 3000
+EXPOSE 3001
 CMD [ "npm", "start" ]
