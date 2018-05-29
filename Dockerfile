@@ -1,8 +1,8 @@
 FROM node:8
 WORKDIR /home/app
 
-ARG CSC308_DB_HOST
-ENV CSC308_DB_HOST $CSC308_DB_HOST
+ARG DB_URL
+ENV CSC308_DB_HOST $DB_URL
 
 COPY package*.json /home/app
 RUN yarn install
@@ -10,4 +10,4 @@ RUN yarn install
 COPY . /home/app
 
 EXPOSE 3001
-CMD [ "npm", "start" ]
+CMD [ "yarn", "start" ]

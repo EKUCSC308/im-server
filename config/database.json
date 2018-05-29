@@ -1,11 +1,11 @@
 {
   "development": {
-    "use_env_variable": "CSC308_DB_HOST"
+    "use_env_variable": "IM_SERVER_DB_URL"
   },
   "test": {
-    "use_env_variable": "CSC308_DB_HOST"
+    "use_env_variable": "IM_SERVER_DB_URL"
   },
   "production": {
-    "use_env_variable": "CSC308_DB_HOST"
+    "use_env_variable": "IM_SERVER_DB_URL"
   }
 }

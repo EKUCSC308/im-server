@@ -15,19 +15,19 @@ const wsServer = io(server)
 const EVENT_SCOPE_MESSAGE = 'message'
 const EVENT_SCOPE_SESSION = 'session'
 
-app.use('/scripts', express.static(__dirname + '/../node_modules'));
+app.use('/scripts', express.static(path.resolve(__dirname) + '/../node_modules'))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
+  res.sendFile(path.resolve(__dirname) + '/index.html')
 })
 
 app.post('/auth/register', async (req, res) => {
   if (_.isEmpty(req.body.username) || _.isEmpty(req.body.password)) {
     return res.json({
       success: false,
-      error: "Username and password must have value."
+      error: 'Username and password must have value.'
     })
   }
 
@@ -36,7 +36,7 @@ app.post('/auth/register', async (req, res) => {
   if (!_.isEmpty(user)) {
     return res.json({
       success: false,
-      error: "An account with that username already exists."
+      error: 'An account with that username already exists.'
     })
   }
 
@@ -46,7 +46,7 @@ app.post('/auth/register', async (req, res) => {
   })
 
   res.json({
-    "success": true
+    'success': true
   })
 })
 
@@ -54,7 +54,7 @@ app.post('/auth/login', async (req, res) => {
   if (_.isEmpty(req.body.username) || _.isEmpty(req.body.password)) {
     return res.json({
       success: false,
-      error: "Username and password must have value."
+      error: 'Username and password must have value.'
     })
   }
 
@@ -80,7 +80,7 @@ app.post('/auth/login', async (req, res) => {
   }, 'secret')
 
   res.json({
-    "jwt": jwt
+    'jwt': jwt
   })
 })
 
@@ -88,7 +88,7 @@ app.get('/conversations', async (req, res) => {
   await models.conversation.findAll()
     .then((conversations) => {
       res.json({
-        "conversations": conversations.map((conversation) => {
+        'conversations': conversations.map((conversation) => {
           return {
             token: conversation.token,
             label: conversation.label
@@ -99,7 +99,7 @@ app.get('/conversations', async (req, res) => {
     .catch(() => {
       return res.json({
         success: false,
-        error: "Failed to load conversations."
+        error: 'Failed to load conversations.'
       })
     })
 })
@@ -132,10 +132,10 @@ wsServer.on('connection', (socket) => {
       for (let x = 0; x < events.length; x++) {
         socket.broadcast.emit('event', {
           scope: EVENT_SCOPE_SESSION,
-          type: event.type,
-          content: event.content,
-          device_token: event.device_token,
-          conversation_token: event.conversation_token
+          type: events[x].type,
+          content: events[x].content,
+          device_token: events[x].device_token,
+          conversation_token: events[x].conversation_token
         })
       }
     })
