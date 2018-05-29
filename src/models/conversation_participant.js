@@ -1,4 +1,4 @@
-module.exports = (sequelize, DataTypes) => {
+module.exports = function (sequelize, DataTypes) {
   var conversation_participant = sequelize.define('conversation_participant', {
     device_token: DataTypes.STRING,
     alias: DataTypes.STRING

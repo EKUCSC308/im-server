@@ -4,7 +4,7 @@
   "description": "",
   "main": "./src/server.js",
   "scripts": {
-    "start": "babel-node ./src/server.js --presets es2015 stage-2 es2017",
+    "start": "./node_modules/.bin/babel-node ./src/server.js --presets es2015 stage-2 es2017",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel src -d lib"
   },
@@ -25,7 +25,6 @@
     "mysql2": "^1.5.3",
     "npm": "^6.1.0",
     "sequelize": "^4.37.10",
-    "sequelize-cli": "^4.0.0",
     "socket.io": "^2.1.0",
     "socket.io-client": "^2.1.0"
   }

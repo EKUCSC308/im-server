@@ -1,11 +1,11 @@
 {
   "development": {
-    "use_env_variable": "IM_SERVER_DB_URL"
+    "use_env_variable": "IM_DB_URL"
   },
   "test": {
-    "use_env_variable": "IM_SERVER_DB_URL"
+    "use_env_variable": "IM_DB_URL"
   },
   "production": {
-    "use_env_variable": "IM_SERVER_DB_URL"
+    "use_env_variable": "IM_DB_URL"
   }
 }

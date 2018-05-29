@@ -1,5 +1,4 @@
-
-module.exports = (sequelize, DataTypes) => {
+module.exports = function (sequelize, DataTypes) {
   var conversation_event = sequelize.define('conversation_event', {
     scope: DataTypes.STRING,
     type: DataTypes.STRING,

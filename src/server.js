@@ -7,6 +7,7 @@ import JsonWebToken from 'jsonwebtoken'
 import bodyParser from 'body-parser'
 import models from './models'
 import * as passwordHelper from './crypto/password'
+import path from 'path'
 
 const app = express()
 const server = http.createServer(app)
