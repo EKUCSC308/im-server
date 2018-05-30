@@ -1,11 +1,11 @@
-module.exports = function (sequelize, DataTypes) {
-  var conversation_participant = sequelize.define('conversation_participant', {
+export default (sequelize, DataTypes) => {
+  const conversationParticipant = sequelize.define('conversation_participant', {
     device_token: DataTypes.STRING,
     alias: DataTypes.STRING
   }, {})
-  conversation_participant.associate = function(models) {
+  conversationParticipant.associate = function (models) {
     // associations can be defined here
   }
 
-  return conversation_participant
+  return conversationParticipant
 }

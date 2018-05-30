@@ -1,5 +1,5 @@
-module.exports = function (sequelize, DataTypes) {
-  var conversation_event = sequelize.define('conversation_event', {
+export default (sequelize, DataTypes) => {
+  const conversationEvent = sequelize.define('conversation_event', {
     scope: DataTypes.STRING,
     type: DataTypes.STRING,
     conversation_token: DataTypes.STRING,
@@ -7,9 +7,9 @@ module.exports = function (sequelize, DataTypes) {
     content: DataTypes.STRING
   }, {})
 
-  conversation_event.associate = function(models) {
+  conversationEvent.associate = (models) => {
     // associations can be defined here
   }
 
-  return conversation_event
+  return conversationEvent
 }
